@@ -90,6 +90,14 @@
 			<version>5.2.5</version>
 		</dependency>
 
+		<!-- for production  -->
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 
 	</dependencies>
 

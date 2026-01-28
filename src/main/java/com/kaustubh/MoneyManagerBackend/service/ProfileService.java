@@ -7,6 +7,7 @@ import com.kaustubh.MoneyManagerBackend.repository.ProfileRepository;
 import com.kaustubh.MoneyManagerBackend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,6 +37,10 @@ public class ProfileService {
 
     private final JwtUtil jwtUtil;
 
+    //production url hiding by making it environment
+    @Value("${app.activation.url}")
+    private String activationURL;
+
     public ProfileDTO register(ProfileDTO profileDTO){
         log.info("Inside ProfileService : register()");
 
@@ -44,7 +49,7 @@ public class ProfileService {
         newProfile = profileRepository.save(newProfile);
 
         //send activation email
-        String activationLink = "http://localhost:8080/api/v1.0/activate?token="+ newProfile.getActivationToken();
+        String activationLink = activationURL+"/api/v1.0/activate?token="+ newProfile.getActivationToken();
         String subject = "Activate your Money Manager account";
         String body = "Click on the following link to activate your account: "+activationLink;
 
